@@ -56,10 +56,10 @@ function newRandomBook() {
 newRandomBook();
 
 function displayNewBook() {
-  titleInput.innerText = currentCover.title;
-  descriptorOneInput.innerText = currentCover.descriptor1;
-  descriptorTwoInput.innerText = currentCover.descriptor2;
-  coverInput.src = currentCover.coverImgSrc;
+  coverTitle.innerText = currentCover.title;
+  coverDescriptorOne.innerText = currentCover.tagline1;
+  coverDescriptorTwo.innerText = currentCover.tagline2;
+  coverImg.src = currentCover.cover;
   // targetTitle.innerText   = currentCover.title;
   // console.log(targetTitle)
   // var blah = document.querySelector('.cover-image')
@@ -97,7 +97,7 @@ function createNewInput(event) {
   covers.push(coverInput.value);
   descriptors.push(descriptor1.value);
   descriptors.push(descriptor2.value);
-  currentCover = new Cover(titleInput.value, coverInput.value, descriptor1.value, descriptor2.value);
+  currentCover = new Cover( coverInput.value, titleInput.value, descriptor1.value, descriptor2.value);
   displayNewBook();
   showMain();
 }
