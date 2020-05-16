@@ -24,13 +24,12 @@ var targetDescriptorTwo = document.querySelector(".user-desc2")
 
 
 // We've provided a few variables below
-// var savedCovers = [
+var savedCovers = [];
 //   new Cover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
-// ];
 // https://images.unsplash.com/photo-1489084917528-a57e68a79a1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80
 // var currentCover = new Cover();
 // // var currentCover = new Cover(titleInput.value, coverInput.value, descriptor1.value, descriptor2.value);
-var currentCover;
+// var currentCover;
 
 // Add your event listeners here :point_down:
 randomCoverBtn.addEventListener("click", newRandomBook);
@@ -38,6 +37,7 @@ makeNewBtn.addEventListener("click", showForm);
 viewSavedBtn.addEventListener("click",showSaved);
 homeBtn.addEventListener("click", showMain);
 createNewBookBtn.addEventListener("click", createNewInput);
+saveCoverBtn.addEventListener("click", addToSavedArray);
 
 // Create your event handlers and other functions here :point_down:
 // We've provided one function to get you started
@@ -60,16 +60,8 @@ function displayNewBook() {
   coverDescriptorOne.innerText = currentCover.tagline1;
   coverDescriptorTwo.innerText = currentCover.tagline2;
   coverImg.src = currentCover.cover;
-  // targetTitle.innerText   = currentCover.title;
-  // console.log(targetTitle)
-  // var blah = document.querySelector('.cover-image')
-  // blah.innerText = currentCover.title;
-  // targetDescriptorOne.innerText = currentCover.descriptor1;
-  // targetDescriptorTwo.innerText = currentCover.descriptor2;
-  // targetCover.src = currentCover.coverImgSrc;
-  // formView.classList.add("hidden");
-  // homeView.classList.remove("hidden");
 }
+
 function showForm() {
   homeView.classList.toggle("hidden");
   formView.classList.toggle("hidden");
@@ -101,3 +93,19 @@ function createNewInput(event) {
   displayNewBook();
   showMain();
 }
+
+function addToSavedArray() {
+  for (var i = 0; i < savedCovers.length; i++) {
+    if (compareSavedCovers(currentCover, savedCovers[i])) {
+      return;
+    }
+  }
+  savedCovers.push(currentCover)
+}
+
+function compareSavedCovers(newCover, existingCover) {
+  return newCover.cover === existingCover.cover && newCover.title === existingCover.title && newCover.tagline1 === existingCover.tagline1 && newCover.tagline2 === existingCover.tagline2;
+  }
+
+
+addToSavedArray();
