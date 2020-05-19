@@ -24,11 +24,11 @@ var targetDescriptorOne = document.querySelector(".user-desc1")
 var targetDescriptorTwo = document.querySelector(".user-desc2")
 // We've provided a few variables below
 var savedCovers = [];
-//   new Cover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
+  // new Cover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
 // https://images.unsplash.com/photo-1489084917528-a57e68a79a1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80
 // var currentCover = new Cover();
 // // var currentCover = new Cover(titleInput.value, coverInput.value, descriptor1.value, descriptor2.value);
-// var currentCover;
+var currentCover;
 // Add your event listeners here :point_down:
 randomCoverBtn.addEventListener("click", newRandomBook);
 makeNewBtn.addEventListener("click", showForm);
@@ -47,8 +47,10 @@ function newRandomBook() {
   coverDescriptorOne.innerText = descriptors[getRandomIndex(descriptors)];
   coverDescriptorTwo.innerText = descriptors[getRandomIndex(descriptors)];
   coverImg.src = covers[getRandomIndex(covers)];
+  currentCover = new Cover(coverImg.src, coverTitle.innerText, coverDescriptorOne.innerText, coverDescriptorTwo.innerText)
 }
 window.onload = newRandomBook();
+
 function displayNewBook() {
   coverTitle.innerText = currentCover.title;
   coverDescriptorOne.innerText = currentCover.tagline1;
@@ -83,11 +85,7 @@ function showMain() {
 }
 function createNewInput(event) {
   event.preventDefault();
-  titles.push(titleInput.value);
-  covers.push(coverInput.value);
-  descriptors.push(descriptor1.value);
-  descriptors.push(descriptor2.value);
-  currentCover = new Cover( coverInput.value, titleInput.value, descriptor1.value, descriptor2.value);
+  currentCover = new Cover(coverInput.value, titleInput.value, descriptor1.value, descriptor2.value);
   displayNewBook();
   showMain();
 }
@@ -97,12 +95,19 @@ function addToSavedArray() {
       return;
     }
   }
+  console.log(currentCover)
   savedCovers.push(currentCover)
+  titles.push(currentCover.title);
+  covers.push(currentCover.cover);
+  descriptors.push(currentCover.value);
+  descriptors.push(currentCover.value);
 }
 function compareSavedCovers(newCover, existingCover) {
   return newCover.cover === existingCover.cover && newCover.title === existingCover.title && newCover.tagline1 === existingCover.tagline1 && newCover.tagline2 === existingCover.tagline2;
 }
+
 function displaySavedCovers() {
+  console.log("here0")
   savedCoverView.innerHTML = "";
   for (var i = 0; i < savedCovers.length; i++) {
     savedCoverView.innerHTML += `
@@ -113,8 +118,23 @@ function displaySavedCovers() {
     </section>
       `
   }
-  savedCoverView.addEventListener("dblclick", function(event) {
-    document.getElementById(event.target.id).remove();
-    savedCovers.splice(event.target.id,1);
-  })
 }
+
+savedCoverView.addEventListener("dblclick", function(event) {
+  var titleToRemove = savedCovers[event.target.id].title
+  titles = titles.filter(function(element) {
+    return titleToRemove != element;
+  })
+  var coverToRemove = savedCovers[event.target.id].cover
+  covers = covers.filter(function(element) {
+    return coverToRemove != element;
+  })
+  var descriptorToRemoveOne = savedCovers[event.target.id].tagline1
+  var descriptorToRemoveTwo = savedCovers[event.target.id].tagline2
+  descriptors = descriptors.filter(function(element) {
+    return descriptorToRemoveOne != element && descriptorToRemoveTwo != element;
+  })
+  savedCovers.splice(event.target.id,1);
+  document.getElementById(event.target.id).remove();
+
+})
