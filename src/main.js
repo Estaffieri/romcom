@@ -22,6 +22,8 @@ var targetCover = document.querySelector(".user-cover");
 var targetTitle = document.querySelector(".user-title");
 var targetDescriptorOne = document.querySelector(".user-desc1")
 var targetDescriptorTwo = document.querySelector(".user-desc2")
+
+
 // We've provided a few variables below
 var savedCovers = [];
 //   new Cover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
@@ -29,6 +31,7 @@ var savedCovers = [];
 // var currentCover = new Cover();
 // // var currentCover = new Cover(titleInput.value, coverInput.value, descriptor1.value, descriptor2.value);
 // var currentCover;
+
 // Add your event listeners here :point_down:
 randomCoverBtn.addEventListener("click", newRandomBook);
 makeNewBtn.addEventListener("click", showForm);
@@ -38,6 +41,7 @@ homeBtn.addEventListener("click", showMain);
 createNewBookBtn.addEventListener("click", createNewInput);
 saveCoverBtn.addEventListener("click", addToSavedArray);
 saveCoverBtn.addEventListener("click", displaySavedCovers);
+
 // Create your event handlers and other functions here :point_down:
 // We've provided one function to get you started
 function getRandomIndex(array) {
@@ -49,20 +53,25 @@ function newRandomBook() {
   coverDescriptorTwo.innerText = descriptors[getRandomIndex(descriptors)];
   coverImg.src = covers[getRandomIndex(covers)];
 }
+
 // newRandomBook();
+
 newRandomBook();
+
 function displayNewBook() {
   coverTitle.innerText = currentCover.title;
   coverDescriptorOne.innerText = currentCover.tagline1;
   coverDescriptorTwo.innerText = currentCover.tagline2;
   coverImg.src = currentCover.cover;
 }
+
 function showForm() {
-  homeView.classList.toggle("hidden");
-  formView.classList.toggle("hidden");
+  homeView.classList.add("hidden");//CHANGED
+  formView.classList.remove("hidden");
   randomCoverBtn.classList.add("hidden");
   saveCoverBtn.classList.add("hidden");
   homeBtn.classList.remove("hidden");
+  savedViewSec.classList.add("hidden");//ADDED
 }
 function showSaved() {
   savedCoverView.classList.remove("hidden");
@@ -79,6 +88,7 @@ function showMain() {
   homeBtn.classList.add("hidden");
   randomCoverBtn.classList.remove("hidden");
   saveCoverBtn.classList.remove("hidden");
+  savedViewSec.classList.add("hidden");
 }
 function createNewInput(event) {
   event.preventDefault();
@@ -90,6 +100,7 @@ function createNewInput(event) {
   displayNewBook();
   showMain();
 }
+
 function addToSavedArray() {
   for (var i = 0; i < savedCovers.length; i++) {
     if (compareSavedCovers(currentCover, savedCovers[i])) {
@@ -98,10 +109,12 @@ function addToSavedArray() {
   }
   savedCovers.push(currentCover)
 }
+
 function compareSavedCovers(newCover, existingCover) {
   return newCover.cover === existingCover.cover && newCover.title === existingCover.title && newCover.tagline1 === existingCover.tagline1 && newCover.tagline2 === existingCover.tagline2;
 }
 addToSavedArray();
+
 function displaySavedCovers() {
   savedCoverView.innerHTML = "";
   for (var i = 0; i < savedCovers.length; i++) {
@@ -114,4 +127,5 @@ function displaySavedCovers() {
       `
   }
 }
+
 displaySavedCovers();
